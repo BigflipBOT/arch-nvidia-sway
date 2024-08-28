@@ -16,8 +16,12 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 
 # install basic tools needed to proceed
 # sudo pacman -S git vim
-vim /etc/pacman.conf # temporary sollution to enablim multilib
-sudo pacman -S nvidia-open-dkms linux-headers nvidia-utils lib32-nvidia-utils # TODO: add enabling multilib before that
+
+# enabling multilib
+vim /etc/pacman.conf # temporary sollution to enable multilib
+
+# installing drivers and other needed packages
+sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvidia nvidia-settings opencl-nvidia nvidia-utils
 
 # TODO: Setting kernel parameters in bootloader (maybe not needed?)
 
@@ -44,7 +48,7 @@ sudo sh -c 'echo "__GLX_VENDOR_LIBRARY_NAME=nvidia" >> /etc/environment '
 sudo sh -c 'echo "WLR_NO_HARDWARE_CURSORS=1" >> /etc/environment ' # no visible cursor fix
 sudo sh -c 'echo "MOZ_ENABLE_WAYLAND=1" >> /etc/environment ' # firefox flickering fix
 sudo sh -c 'echo "LIBSEAT_BAVKEND=logind" >> /etc/environment ' # error at sway startup fix
-sudo sh -c 'echo "_JAVA_AWT_WM_NONREPARENTING=1" >> /etc/environment ' # fix for java aplications
+sudo sh -c 'echo "_JAVA_AWT_WM_NONREPARENTING=1" >> /etc/environment ' # fix for some java aplications
 
 # reboot (end of the script)
 reboot now
