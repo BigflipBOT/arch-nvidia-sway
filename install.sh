@@ -41,8 +41,10 @@ sudo sh -c 'echo "LIBVA_DRIVER_NAME=nvidia" >> /etc/environment '
 sudo sh -c 'echo "XDG_SESSION_TYPE=wayland" >> /etc/environment '
 sudo sh -c 'echo "GBM_BACKEND=nvidia-drm" >> /etc/environment '
 sudo sh -c 'echo "__GLX_VENDOR_LIBRARY_NAME=nvidia" >> /etc/environment '
-sudo sh -c 'echo "WLR_NO_HARDWARE_CURSORS=1" >> /etc/environment '
-sudo sh -c 'echo "MOZ_ENABLE_WAYLAND=1" >> /etc/environment '
+sudo sh -c 'echo "WLR_NO_HARDWARE_CURSORS=1" >> /etc/environment ' # no visible cursor fix
+sudo sh -c 'echo "MOZ_ENABLE_WAYLAND=1" >> /etc/environment ' # firefox flickering fix
+sudo sh -c 'echo "LIBSEAT_BAVKEND=logind" >> /etc/environment ' # error at sway startup fix
+sudo sh -c 'echo "_JAVA_AWT_WM_NONREPARENTING=1" >> /etc/environment ' # fix for java aplications
 
 # reboot (end of the script)
 reboot now
