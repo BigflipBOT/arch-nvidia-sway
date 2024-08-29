@@ -50,5 +50,10 @@ sudo sh -c 'echo "MOZ_ENABLE_WAYLAND=1" >> /etc/environment ' # firefox flickeri
 # sudo sh -c 'echo "LIBSEAT_BAVKEND=logind" >> /etc/environment ' # error about seatd at sway startup fix
 sudo sh -c 'echo "_JAVA_AWT_WM_NONREPARENTING=1" >> /etc/environment ' # fix for some java aplications
 
-# reboot (end of the script)
+# copying default config
+mkdir ~/.config/sway
+cp /etc/sway/config ~/.config/sway/config
+
+
+### reboot (end of the script)
 reboot now
