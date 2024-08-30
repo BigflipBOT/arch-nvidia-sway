@@ -3,35 +3,31 @@
 ### initialization
 
 username=$(whoami)
-
+if [ "$EUID" -eq 0 ]
+  then echo "do not run as root"
+  exit -1
+fi
 
 ### driver related
 
-# perform a system update
-sudo pacman -Syu
+# perform a system update & install some needed packages
+sudo pacman -Syu base-devel linux-headers --needed
 
 # dispalay card name
 lspci -k | grep -A 2 -E "(VGA|3D)"
 
-# install basic tools needed to proceed
-# sudo pacman -S git vim
-
 # enabling multilib
 vim /etc/pacman.conf # temporary sollution to enable multilib
 
-# installing drivers and other needed packages
+# installing drivers and other driver-related packages
 sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvidia nvidia-settings opencl-nvidia nvidia-utils
 
-# TODO: Setting kernel parameters in bootloader (maybe not needed?)
+# TODO: Setting kernel parameters in bootloader 
 
 # add early loading of nvidia modules, TODO: make sure that is all that is needed
 modprobe nvidia NVreg_OpenRmEnableUnsupportedGpus=1
-modprobe nvidia_drm modeset=1 # not sure if this is needed while installing nvidia-open? maybe check that later
-
-# check for errors
-mkinitcpio
-mkinitcpio --automods | grep "nvidia" | wc -l
-
+modprobe nvidia_drm modeset=1 
+sudo mkinitcpio -P
 
 ### sway setup
 
