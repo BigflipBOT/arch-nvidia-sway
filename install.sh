@@ -38,7 +38,8 @@ sudo chown $(stat -c '%u:%g' /etc/default/grub) tmp
 sudo mv tmp /etc/default/grub
 
 # loading modules to initramfs
-# TODO
+sudo chown 0:0 ./nvidia_initramfs_modules.conf
+cp ./nvidia_initramfs_modules.conf /etc/mkinitcpio.conf.d/
 
 # passing module settings conf file for udev
 sudo chown 0:0 ./nvidia_modules.conf
