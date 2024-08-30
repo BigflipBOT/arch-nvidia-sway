@@ -75,4 +75,4 @@ cp /etc/sway/config ~/.config/sway/config
 
 
 ### reboot (end of the script)
-reboot now
+reboot
