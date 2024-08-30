@@ -11,18 +11,31 @@ fi
 ### driver related
 
 # perform a system update & install some needed packages
-sudo pacman -Syu base-devel linux-headers --needed
+sudo pacman -Syu base-devel linux-headers vim --needed
 
 # dispalay card name
 lspci -k | grep -A 2 -E "(VGA|3D)"
 
 # enabling multilib
-vim /etc/pacman.conf # temporary sollution to enable multilib
+vim /etc/pacman.conf # temporary solution to enable multilib
 
 # installing drivers and other driver-related packages
 sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvidia nvidia-settings opencl-nvidia nvidia-utils
 
-# TODO: Setting kernel parameters in bootloader 
+# setting kernel parameters in bootloader (here only grub)
+sudo cp /etc/default/grub /etc/default/grub.backup #this line makes backup just in case
+touch tmp
+while IFS="" read -r p || [ -n "$p" ]
+do
+  if  (printf '%s\n' "$p" | grep -q "GRUB_CMDLINE_LINUX_DEFAULT") ; then
+    printf '%s\b nvidia-drm.modeset=1"\n' "$p" >> tmp
+  else
+    printf '%s\n' "$p" >> tmp
+  fi
+done < /etc/default/grub.backup
+sudo chmod $(stat -c '%a' /etc/default/grub) tmp
+sudo chown $(stat -c '%u:%g' /etc/default/grub) tmp
+sudo mv tmp /etc/default/grub
 
 # add early loading of nvidia modules, TODO: make sure that is all that is needed
 modprobe nvidia NVreg_OpenRmEnableUnsupportedGpus=1
