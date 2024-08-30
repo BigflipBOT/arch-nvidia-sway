@@ -17,7 +17,7 @@ sudo pacman -Syu base-devel linux-headers vim --needed
 lspci -k | grep -A 2 -E "(VGA|3D)"
 
 # enabling multilib
-vim /etc/pacman.conf # temporary solution to enable multilib
+sudo vim /etc/pacman.conf # temporary solution to enable multilib
 
 # installing drivers and other driver-related packages
 sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvidia nvidia-settings opencl-nvidia nvidia-utils
