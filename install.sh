@@ -48,6 +48,10 @@ cp ./nvidia_modules.conf /etc/modprobe.d/
 # regenerate initramfs
 sudo mkinitcpio -P
 
+# pacman hooks for updating initramfs when driver upgrade
+sudo mkdir -p /etc/pacman.d/hooks/ 
+sudo mv ./nvidia.hook /etc/pacman.d/hooks/
+
 ### wayland setup
 
 # privelage managment
