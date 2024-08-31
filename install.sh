@@ -26,7 +26,6 @@ sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvi
 sudo cp /etc/default/grub /etc/default/grub.backup #this line makes backup just in case
 touch tmp
 while read p; do
-do
   if  (echo "$p" | grep -q "GRUB_CMDLINE_LINUX_DEFAULT") ; then
     echo "$(echo "$p" | rev | cut -c 2- | rev) nvidia-drm.modeset=1\"" >> tmp
   else
