@@ -25,12 +25,12 @@ sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvi
 # setting kernel parameters in bootloader config (grub)
 sudo cp /etc/default/grub /etc/default/grub.backup #this line makes backup just in case
 touch tmp
-while IFS="" read -r p || [ -n "$p" ]
+while read p; do
 do
-  if  (printf '%s\n' "$p" | grep -q "GRUB_CMDLINE_LINUX_DEFAULT") ; then
-    printf '%s\b nvidia-drm.modeset=1"\n' "$p" >> tmp
+  if  (echo "$p" | grep -q "GRUB_CMDLINE_LINUX_DEFAULT") ; then
+    echo "$(echo "$p" | rev | cut -c 2- | rev) nvidia-drm.modeset=1\"" >> tmp
   else
-    printf '%s\n' "$p" >> tmp
+    echo "$p" >> tmp
   fi
 done < /etc/default/grub.backup
 sudo chmod $(stat -c '%a' /etc/default/grub) tmp
