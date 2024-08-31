@@ -22,7 +22,7 @@ sudo vim /etc/pacman.conf # temporary solution to enable multilib
 # installing drivers and other driver-related packages
 sudo pacman -Sy nvidia-open-dkms egl-wayland lib32-nvidia-utils lib32-opencl-nvidia nvidia-settings opencl-nvidia nvidia-utils
 
-# setting kernel parameters in bootloader (here only grub)
+# setting kernel parameters in bootloader config (grub)
 sudo cp /etc/default/grub /etc/default/grub.backup #this line makes backup just in case
 touch tmp
 while IFS="" read -r p || [ -n "$p" ]
@@ -36,6 +36,7 @@ done < /etc/default/grub.backup
 sudo chmod $(stat -c '%a' /etc/default/grub) tmp
 sudo chown $(stat -c '%u:%g' /etc/default/grub) tmp
 sudo mv tmp /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg #regenerate bootloader config 
 
 # loading modules to initramfs
 sudo chown 0:0 ./nvidia_initramfs_modules.conf
