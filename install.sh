@@ -39,11 +39,11 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg #regenerate bootloader config
 
 # loading modules to initramfs
 sudo chown 0:0 ./nvidia_initramfs_modules.conf
-cp ./nvidia_initramfs_modules.conf /etc/mkinitcpio.conf.d/
+sudo cp ./nvidia_initramfs_modules.conf /etc/mkinitcpio.conf.d/
 
 # passing module settings conf file for udev
 sudo chown 0:0 ./nvidia_modules.conf
-cp ./nvidia_modules.conf /etc/modprobe.d/
+sudo cp ./nvidia_modules.conf /etc/modprobe.d/
 
 # regenerate initramfs
 sudo mkinitcpio -P
